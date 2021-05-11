@@ -15,8 +15,8 @@ from addTransaction import AddTransaction
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import app_import
-### ***
-#import lotto
+from weather import Weather
+import lotto
 
 ## both format should match
 _dt_datefmt = "%d.%m.%Y"
@@ -42,7 +42,23 @@ class AppWin:
         self.cal_tr_From.bind('<<DateEntrySelected>>', lambda x: self.updateTransactionTable() )
         
         
-
+    def getWeatherInfo(self):
+        city = self.ent_city.get()
+        try:
+            x = Weather(city)
+            self.lbl_location.configure(text="Location : "+x.Location())
+            self.lbl_temp_number.configure(text=x.Temperature())
+            self.lbl_type.configure(text=x.Type())
+            self.lbl_windVal.configure(text=x.WindSpeed())
+            self.lbl_pressureVal.configure(text=x.Pressure())
+            self.lbl_tMinVal.configure(text=x.TempMin())
+            self.lbl_tMaxVal.configure(text=x.TempMax())
+            self.lbl_humidityVal.configure(text=x.Humidity())
+            #self.cv_icon.create_image(10,10,image=x.Icon(), anchor='center')
+        except:
+             tk.messagebox.showwarning("Wrong input city name!!",
+                                      "This city name is incorrect.\n\nPlease, give correct city name.",
+                                      parent=self.mainwindow)    
 
         
     def chartSpendingsMonth(self):
@@ -482,48 +498,123 @@ class AppWin:
         self.frm_categories.master.columnconfigure('0', weight=1)
         self.ntb_app.add(self.frm_categories, text='Categories	')
         
+       ### LOTTO TAB
+        self.frm_bells = ttk.Frame(self.ntb_app)
         
-        ### LOTTO TAB
-        self.frm_lotto = ttk.Frame(self.ntb_app)
-        self.lbfr_weather = ttk.Labelframe(self.frm_lotto)
+        #lbfr choose
+        self.lbfr_choose = ttk.Labelframe(self.frm_bells)
+        self.lbl_city=ttk.Label(self.lbfr_choose)
+        self.lbl_city.configure(text='Please, write the city name in the box:')
+        self.lbl_city.grid(column='0',row='0',sticky='nse', padx='50', pady='5')
+        
+        self.ent_city = ttk.Entry(self.lbfr_choose)
+        self.ent_city.grid(column='1',row='0',sticky='nesw', pady='10', ipadx='50')
+        
+        self.btn_city=ttk.Button(self.lbfr_choose)
+        self.btn_city.configure(text='Confirm', command = self.getWeatherInfo)
+        self.btn_city.grid(column='2',row='0',sticky='nsw', padx='50', pady='10')
+        
+        self.lbfr_choose.configure(text='Choose city for which you want to have information displayed')
+        self.lbfr_choose.grid(column='0', row='0', sticky='nsew', padx='50',pady='5')
+        
+        #lbfr weather
+        self.lblfr_weather = ttk.Labelframe(self.frm_bells)
+        #location label
+        self.lbl_location = ttk.Label(self.lblfr_weather)
+        self.lbl_location.configure(text='Please, enter the city name above')
+        self.lbl_location.grid(column='0', columnspan='4', pady='10', row='0')
+        #calendar        
         self.var_Calendar = tk.StringVar(value='--.--.----')
-        self.calendar = tkcal.Calendar(self.lbfr_weather, 
+        self.calendar = tkcal.Calendar(self.lblfr_weather, 
                                        selectmode='day', date_pattern=_cal_datefmt,
                                        textvariable=self.var_Calendar)
-        self.calendar.grid(column='0', padx='10', pady='10', row='2')
-        self.lbfr_weather.configure(text='Calendar')
-        self.lbfr_weather.grid(column='0', row='0', sticky='nsew')
-        self.labelframe5 = ttk.Labelframe(self.frm_lotto)
-        self.label6 = ttk.Label(self.labelframe5)
-        self.label6.configure(justify='center', text='weather, icon, location')
-        self.label6.grid(column='0', row='0', 
-                         columnspan='2', sticky='',
-                         pady=20)
-        # time
-        self.lbl_lt_time = ttk.Label(self.labelframe5)
+        self.calendar.grid(column='2', columnspan='3',row='3',rowspan='4',
+                           sticky='nsw', padx='70')
+        #canvas for icon
+        self.cv_icon=tk.Canvas(self.lblfr_weather)
+        self.cv_icon.configure(width = '60', height='50',background='blue')
+        self.cv_icon.grid(column='0',row='2')
+        #icon label
+        self.lbl_type = ttk.Label(self.lblfr_weather)
+        self.lbl_type.configure(text='UNKNOWN')
+        self.lbl_type.grid(column='0', padx='15', pady='10', row='1')
+        #tempreture number
+        self.lbl_temp_number = ttk.Label(self.lblfr_weather)
+        self.lbl_temp_number.configure(text='UNKNOWN')
+        self.lbl_temp_number.grid(column='1', pady='10', row='2')
+        #tempreture label
+        self.lbl_temperature = ttk.Label(self.lblfr_weather)
+        self.lbl_temperature.configure(text='Temperature')
+        self.lbl_temperature.grid(column='1', padx='10', pady='10', row='1')
+        #today's date label
+        self.lbl_today = ttk.Label(self.lblfr_weather)
+        self.lbl_today.configure(text='TODAY IS')
+        self.lbl_today.grid(column='2', row='1',sticky='w',padx='70')
+        #today's date number
+        self.todayDate = ttk.Label(self.lblfr_weather)
+        self.todayDate.configure(text=dt.date.today().strftime(_dt_datefmt))
+        self.todayDate.configure(font='{Arial} 16 {}', foreground='black', justify='center')
+        self.todayDate.grid(column='3', row='1', sticky='w')
+        #time is label
+        self.lbl_lt_time = ttk.Label(self.lblfr_weather)
         self.lbl_lt_time.configure(justify='center', text='Current time:')
-        self.lbl_lt_time.grid(column='0', row='1', sticky='e')
-        self.label7 = ttk.Label(self.labelframe5)
+        self.lbl_lt_time.grid(column='2', row='2', sticky='w',padx='70')
+        #time label                       
+        self.lbl_time = ttk.Label(self.lblfr_weather)
         self.var_CurrentTime = tk.StringVar(value='eeef')
-        self.label7.configure( font='{Arial} 16 {}', foreground='black', justify='center')
-        self.label7.configure(textvariable=self.var_CurrentTime, width='20')
-        self.label7.grid(column='1', row='1', pady=10)
-        # date
-        self.lbl_lt_date = ttk.Label(self.labelframe5)
+        self.lbl_time.configure( font='{Arial} 16 {}', foreground='black', justify='center')
+        self.lbl_time.configure(textvariable=self.var_CurrentTime, width='20')
+        self.lbl_time.grid(column='3', row='2', pady=10, sticky='e')
+        #selected date
+        self.lbl_lt_date = ttk.Label(self.lblfr_weather)
         self.lbl_lt_date.configure(justify='center', text='Selected date:')
-        self.lbl_lt_date.grid(column='0', row='2', sticky='e')
-        self.lbl_lt_cal = ttk.Label(self.labelframe5)
+        self.lbl_lt_date.grid(column='2', row='7', sticky='e',padx='70')
+        self.lbl_lt_cal = ttk.Label(self.lblfr_weather)
         self.lbl_lt_cal.configure(font='{Arial} 16 {}', foreground='black', justify='center')
         self.lbl_lt_cal.configure(textvariable=self.var_Calendar, width='20')
-        self.lbl_lt_cal.grid(column='1', row='2')
-        #
-        self.labelframe5.configure(text='Weather')
-        self.labelframe5.grid(column='1', row='0', sticky='nsew')
-        self.labelframe5.master.columnconfigure('1', weight=1)
-        self.frm_lotto.grid(column='0', row='0', sticky='nsew')
-        self.frm_lotto.master.rowconfigure('0', weight=1)
-        self.frm_lotto.master.columnconfigure('0', weight=1)
-        self.ntb_app.add(self.frm_lotto, text='Bells and whistlers')
+        self.lbl_lt_cal.grid(column='3', row='7')
+        
+        self.lbl_wind = ttk.Label(self.lblfr_weather)
+        self.lbl_wind.configure(text='Wind')
+        self.lbl_wind.grid(column='0', padx='20', row='3', sticky="se", pady ='10')
+        self.lbl_windVal = ttk.Label(self.lblfr_weather)
+        self.lbl_windVal.configure(text='UNKNOWN')
+        self.lbl_windVal.grid(column='1', padx='10', row='3', sticky="se", pady ='10')
+        self.lbl_pressure = ttk.Label(self.lblfr_weather)
+        self.lbl_pressure.configure(text='Pressure')
+        self.lbl_pressure.grid(column='0', padx='15', row='4', sticky="e")
+        self.lbl_pressureVal = ttk.Label(self.lblfr_weather)
+        self.lbl_pressureVal.configure(text='UNKNOWN')
+        self.lbl_pressureVal.grid(column='1', padx='10', row='4')
+        self.lbl_tMax = ttk.Label(self.lblfr_weather)
+        self.lbl_tMax.configure(text='Temperature max')
+        self.lbl_tMax.grid(column='0', padx='10', row='5', sticky="e")
+        self.lbl_tMaxVal = ttk.Label(self.lblfr_weather)
+        self.lbl_tMaxVal.configure(text='UNKNOWN')
+        self.lbl_tMaxVal.grid(column='1', padx='15', row='5')
+        self.lbl_tMin = ttk.Label(self.lblfr_weather)
+        self.lbl_tMin.configure(text='Tempreture min')
+        self.lbl_tMin.grid(column='0', padx='15', row='6', sticky="e")
+        self.lbl_tMinVal = ttk.Label(self.lblfr_weather)
+        self.lbl_tMinVal.configure(text='UNKNOWN')
+        self.lbl_tMinVal.grid(column='1', padx='10', row='6')
+        self.lbl_humidity = ttk.Label(self.lblfr_weather)
+        self.lbl_humidity.configure(text='Humidity')
+        self.lbl_humidity.grid(column='0',pady='5', padx='15', row='7', sticky="e")
+        self.lbl_humidityVal = ttk.Label(self.lblfr_weather)
+        self.lbl_humidityVal.configure(text='UNKNOWN')
+        self.lbl_humidityVal.grid(column='1', padx='10', row='7')
+        
+        
+        #lbfr weather
+        self.lblfr_weather.configure(text='Weather')
+        self.lblfr_weather.grid(column='0', row='1', sticky='nsew', padx='50')
+        self.lblfr_weather.master.columnconfigure('1', weight=1)
+        
+        self.frm_bells.grid(column='0', row='0', sticky='nsew')
+        self.frm_bells.master.rowconfigure('0', weight=1)
+        self.frm_bells.master.columnconfigure('0', weight=1)
+        self.ntb_app.add(self.frm_bells, text='Bells and whistlers')
         
         
         ### NOTEBOOK GRID ...
@@ -548,5 +639,4 @@ if __name__ == '__main__':
     app = AppWin()
     app.run()
    
-
 
