@@ -21,10 +21,10 @@
           <property name="row">1</property>
         </layout>
         <child>
-          <object class="ttk.Label" id="var_location">
+          <object class="ttk.Label" id="lbl_location">
             <property name="font">{Arial} 16 {}</property>
             <property name="text" translatable="yes">Please, enter the city name above</property>
-            <property name="textvariable">string:location</property>
+            <property name="textvariable">string:var_location</property>
             <layout manager="grid">
               <property name="column">0</property>
               <property name="columnspan">4</property>
@@ -50,7 +50,7 @@
         <child>
           <object class="ttk.Label" id="lbl_temp_number">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_wt_temp</property>
             <layout manager="grid">
               <property name="column">1</property>
               <property name="propagate">True</property>
@@ -62,7 +62,6 @@
           <object class="ttk.Label" id="lbl_today">
             <property name="font">{Arial} 12 {}</property>
             <property name="text" translatable="yes">Today is</property>
-            <property name="textvariable">string:lab</property>
             <layout manager="grid">
               <property name="column">2</property>
               <property name="padx">50</property>
@@ -75,7 +74,7 @@
         <child>
           <object class="ttk.Label" id="lbl_type">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_et_Type</property>
             <layout manager="grid">
               <property name="column">0</property>
               <property name="padx">40</property>
@@ -125,10 +124,10 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_time">
+          <object class="ttk.Label" id="lbl_timeNum">
             <property name="font">{Arial} 12 {}</property>
             <property name="text" translatable="yes">&lt;time&gt;</property>
-            <property name="textvariable">string:time</property>
+            <property name="textvariable">string:var_time</property>
             <layout manager="grid">
               <property name="column">3</property>
               <property name="propagate">True</property>
@@ -152,10 +151,10 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_lt_cal">
+          <object class="ttk.Label" id="lbl_lt_cal">
             <property name="font">{Arial} 12 {}</property>
             <property name="text" translatable="yes">&lt;Selected date&gt;</property>
-            <property name="textvariable">string:selection</property>
+            <property name="textvariable">string:var_selection</property>
             <layout manager="grid">
               <property name="column">3</property>
               <property name="propagate">True</property>
@@ -165,10 +164,10 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_todayDate">
+          <object class="ttk.Label" id="lbl_todayDate">
             <property name="font">{Arial} 12 {}</property>
             <property name="text" translatable="yes">&lt;todays date&gt;</property>
-            <property name="textvariable">string:today</property>
+            <property name="textvariable">string:var_todayDate</property>
             <layout manager="grid">
               <property name="column">3</property>
               <property name="propagate">True</property>
@@ -190,9 +189,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_wt_Wind">
+          <object class="ttk.Label" id="lbl_windVal">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_wt_Wind</property>
             <layout manager="grid">
               <property name="column">1</property>
               <property name="padx">10</property>
@@ -215,9 +214,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_wt_Pressure">
+          <object class="ttk.Label" id="lbl_pressureVal">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_wt_Pressure</property>
             <layout manager="grid">
               <property name="column">1</property>
               <property name="padx">10</property>
@@ -228,9 +227,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_wt_tMax">
+          <object class="ttk.Label" id="lbl_tMaxVal">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_wt_tMax</property>
             <layout manager="grid">
               <property name="column">1</property>
               <property name="padx">10</property>
@@ -241,7 +240,7 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="lbl_max_tempo">
+          <object class="ttk.Label" id="lbl_tMax">
             <property name="text" translatable="yes">Temp.max</property>
             <layout manager="grid">
               <property name="column">0</property>
@@ -253,7 +252,7 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="lbl_tmep_min">
+          <object class="ttk.Label" id="lbl_tMin">
             <property name="text" translatable="yes">Temp.min</property>
             <layout manager="grid">
               <property name="column">0</property>
@@ -265,9 +264,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_wt_tMin">
+          <object class="ttk.Label" id="lbl_tMin">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_wt_tMin</property>
             <layout manager="grid">
               <property name="column">1</property>
               <property name="padx">10</property>
@@ -278,7 +277,7 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="label26">
+          <object class="ttk.Label" id="lbl_humidity">
             <property name="text" translatable="yes">Humidity</property>
             <layout manager="grid">
               <property name="column">0</property>
@@ -290,9 +289,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="var_wt_Humidity">
+          <object class="ttk.Label" id="lbl_humidityVal">
             <property name="text" translatable="yes">UNKNOWN</property>
-            <property name="textvariable">string:default</property>
+            <property name="textvariable">string:var_wt_Humidity</property>
             <layout manager="grid">
               <property name="column">1</property>
               <property name="padx">10</property>
