@@ -447,7 +447,7 @@ class FinanceApp:
         except:
             print("Some problem selecting file.")
             return
-        print("Selected filename for export: ", exportFileName.name )
+        # print("Selected filename for export: ", exportFileName.name )
         try:
             export_df = pd.DataFrame(None, columns=self.tbl_transactions_cols)
             for row in exportingitems:
