@@ -7,7 +7,7 @@ MAIN APP class
 try:
     import sys
     import tkinter as tk
-    import tkinter.ttk as ttk
+    import tkinter.messagebox as messagebox
 except:
     ## NO GUI. EXIT
     print('Required library "tkinter" is not found. Please install it running:')
@@ -84,7 +84,7 @@ def startup_checking():
         splash_label = tk.Label(splash_root,text="Loading...",font=28)
         splash_label.pack()
         splash_root.eval('tk::PlaceWindow . center')
-        reply =  tk.messagebox.askyesno(title="Libraries absent", 
+        reply =  messagebox.askyesno(title="Libraries absent", 
                                message="Python libraries absent:\n" + 
                                        "\n".join(absent) +
                                        "\n\nDo you want to install them?")
